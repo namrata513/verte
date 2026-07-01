@@ -14,7 +14,7 @@ from tensorflow.keras.preprocessing.image import img_to_array
 
 
 # Replace your current CORS line with this:
-CORS(app, resources={r"/api/*": {"origins": "*"}}, methods=["GET", "POST", "OPTIONS"])
+
 
 DB_PATH = "database/verte.db"
 
@@ -28,6 +28,8 @@ MODEL = tf.keras.models.load_model(MODEL_PATH)
 frontend_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'Frontend'))
 
 app = Flask(__name__, template_folder=frontend_dir, static_folder=frontend_dir)
+
+CORS(app, resources={r"/api/*": {"origins": "*"}}, methods=["GET", "POST", "OPTIONS"])
 
 # CRITICAL: These must match the exact alphabetical order of the folders 
 # your model was trained on! Update these to match your dataset.
