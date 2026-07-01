@@ -12,7 +12,7 @@ import tensorflow as tf
 from tensorflow.keras.applications.mobilenet_v2 import preprocess_input
 from tensorflow.keras.preprocessing.image import img_to_array
 
-app = Flask(__name__, template_folder=frontend_dir, static_folder=frontend_dir)
+
 # Replace your current CORS line with this:
 CORS(app, resources={r"/api/*": {"origins": "*"}}, methods=["GET", "POST", "OPTIONS"])
 
@@ -27,6 +27,7 @@ MODEL = tf.keras.models.load_model(MODEL_PATH)
 
 frontend_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'Frontend'))
 
+app = Flask(__name__, template_folder=frontend_dir, static_folder=frontend_dir)
 
 # CRITICAL: These must match the exact alphabetical order of the folders 
 # your model was trained on! Update these to match your dataset.
