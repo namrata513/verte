@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Verte - Create Profile</title>
+      <link rel="preconnect" href="https://fonts.googleapis.com">
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+      <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Silkscreen:wght@400;700&display=swap" rel="stylesheet">
+      <script src="https://cdn.tailwindcss.com"></script>
+      <script src="audio-manager.js" defer></script>
+      <script src="auth.js"></script>
+      <script>
+         tailwind.config = {
+             theme: {
+                 extend: {
+                     fontFamily: {
+                         pixelHeader: ['"Press Start 2P"', 'cursive'],
+                         pixelUi: ['"Silkscreen"', 'sans-serif'],
+                     }
+                 }
+             }
+         }
+      </script>
+      <link rel="stylesheet" href="style.css">
+   </head>
+<body class="bg-slate-950 antialiased flex items-center justify-center p-4 py-6 bg-cover bg-center bg-no-repeat bg-fixed" style="background-image: url('assets/backdrop2.jpg');">
+      
+    <div class="fixed inset-0 pointer-events-none z-50 font-pixelUi p-4 md:p-6 select-none mix-blend-screen">
+        <div class="absolute bottom-4 right-4 md:bottom-4 md:right-6 text-[9px] tracking-wider text-white hidden sm:block">
+               LOC_ID // FRNT-END_NODE
+        </div>
+    </div>
+      <section id="auth-section" class="w-full max-w-3xl bg-slate-700/50 backdrop-blur-lg p-4">
+         <div class="verte-card rounded-lg max-w-3xl w-full text-center flex flex-cols-2 items-center justify-center backdrop-blur-sm no-scanlines ">
+            <div id="register-container" class= 'verte-card p-4'>
+               <form id="register-form" action="dashboard.html" class="w-full grid grid-cols-2 gap-6" >
+                  <div class="grid grid-cols-1 sm:flex-row items-center gap-6 p-4 bg-slate-900/40 rounded-md">
+                     <div id="avatar-preview-zone" class="flex flex-col items-center justify-center text-center space-y-3 sm:border-r-2 sm:border-grey sm:pr-6">
+                        <div class="relative w-40 h-40 p-2 mt-2 bg-sky-950 border-2 border-black shadow-[3px_3px_0px_#000] rounded-full">
+                           <div class="w-full h-full bg-sky-950 overflow-hidden rounded-full">
+                              <img id="avatar-preview" src="assets/avatars/avatar1.webp" alt="Selected Profile Preview" class="w-full h-full object-cover">
+                           </div>
+                        </div>
+                        <span class="text-[9px] font-pixelUi text-slate-400 uppercase tracking-widest pt-1">Preview</span>
+                     </div>
+                     <!-- avatar selection-->
+                     <div id="avatar-selection-zone" class="w-full space-y-2">
+                        <p class="text-center sm:text-left text-[10px] font-pixelUi text-slate-400 uppercase tracking-wider pl-1">Select Avatar Insignia</p>
+                        <div id="avatar-selection" class="flex flex-wrap gap-2 bg-slate-900 p-3  max-h-34 overflow-y-auto custom-scrollbar"> 
+                           <label class="avatar-label relative flex items-center justify-center p-1 cursor-pointer transition transform hover:scale-105"> 
+                           <input type="radio" name="avatar" value="avatar1" checked class="sr-only"> 
+                           <img src="assets/avatars/avatar1.webp" alt="Avatar 1" class="avatar-img w-10 h-10 object-cover border-2 border-black transition-all"> 
+                           </label>
+                           <label class="avatar-label relative flex items-center justify-center p-1 cursor-pointer transition transform hover:scale-105"> 
+                           <input type="radio" name="avatar" value="avatar2" class="sr-only"> 
+                           <img src="assets/avatars/avatar2.webp" alt="Avatar 2" class="avatar-img w-10 h-10 object-cover border-2 border-black transition-all"> 
+                           </label>
+                           <label class="avatar-label relative flex items-center justify-center p-1 cursor-pointer transition transform hover:scale-105"> 
+                           <input type="radio" name="avatar" value="avatar3" class="sr-only"> 
+                           <img src="assets/avatars/avatar3.webp" alt="Avatar 3" class="avatar-img w-10 h-10 object-cover border-2 border-black transition-all"> 
+                           </label>
+                           <label class="avatar-label relative flex items-center justify-center p-1 cursor-pointer transition transform hover:scale-105"> 
+                           <input type="radio" name="avatar" value="avatar4" class="sr-only"> 
+                           <img src="assets/avatars/avatar4.webp" alt="Avatar 4" class="avatar-img w-10 h-10 object-cover border-2 border-black transition-all"> 
+                           </label>
+                           <label class="avatar-label relative flex items-center justify-center p-1 cursor-pointer transition transform hover:scale-105"> 
+                           <input type="radio" name="avatar" value="avatar5" class="sr-only"> 
+                           <img src="assets/avatars/avatar5.webp" alt="Avatar 5" class="avatar-img w-10 h-10 object-cover border-2 border-black transition-all"> 
+                           </label>
+                           <label class="avatar-label relative flex items-center justify-center p-1 cursor-pointer transition transform hover:scale-105"> 
+                           <input type="radio" name="avatar" value="avatar6" class="sr-only"> 
+                           <img src="assets/avatars/avatar6.webp" alt="Avatar 6" class="avatar-img w-10 h-10 object-cover border-2 border-black transition-all"> 
+                           </label>
+                           <label class="avatar-label relative flex items-center justify-center p-1 cursor-pointer transition transform hover:scale-105"> 
+                           <input type="radio" name="avatar" value="avatar7" class="sr-only"> 
+                           <img src="assets/avatars/avatar7.webp" alt="Avatar 7" class="avatar-img w-10 h-10 object-cover border-2 border-black transition-all"> 
+                           </label>
+                           <label class="avatar-label relative flex items-center justify-center p-1 cursor-pointer transition transform hover:scale-105"> 
+                           <input type="radio" name="avatar" value="avatar8" class="sr-only"> 
+                           <img src="assets/avatars/avatar8.webp" alt="Avatar 8" class="avatar-img w-10 h-10 object-cover border-2 border-black transition-all"> 
+                           </label>
+                           <label class="avatar-label relative flex items-center justify-center p-1 cursor-pointer transition transform hover:scale-105"> 
+                           <input type="radio" name="avatar" value="avatar9" class="sr-only"> 
+                           <img src="assets/avatars/avatar9.webp" alt="Avatar 9" class="avatar-img w-10 h-10 object-cover border-2 border-black transition-all"> 
+                           </label>
+                           <label class="avatar-label relative flex items-center justify-center p-1 cursor-pointer transition transform hover:scale-105"> 
+                           <input type="radio" name="avatar" value="avatar10" class="sr-only"> 
+                           <img src="assets/avatars/avatar10.webp" alt="Avatar 10" class="avatar-img w-10 h-10 object-cover border-2 border-black transition-all"> 
+                           </label>
+                        </div>
+                     </div>
+                  </div>
+                  <div class= 'space-y-4'>
+                     <!-- branding-->
+                     <div class="space-y-4">
+                        <a href="index.html" id="back-to-slides" class="absolute top-6 left-8 text-slate-400 hover:text-white flex items-center gap-1.5 text-[10px] font-pixelUi tracking-wider uppercase transition-colors group">
+                        <span class="transform group-hover:-translate-x-1 transition-transform">←</span> Back to Info
+                        </a>
+                        <header class="text-center mb-8 mt-10 font-pixelUi flex flex-col items-center">
+                           <h1 class="morph-title text-2xl md:text-3xl font-pixelHeader text-green-600 tracking-wide uppercase mb-3 animate-bounce-flicker animate-retro-flicker">
+                              Verte<span class="text-emerald-400">.</span>
+                           </h1>
+                           <h2 class="text-md font-bold text-slate-200 uppercase tracking-wide">Create Profile</h2>
+                           <p id="auth-subtitle" class="text-xs text-slate-400 mt-2 font-mono tracking-tight">Set up an account to save your progress.</p>
+                        </header>
+                     </div>
+                     <!--input section-->
+                     <div class="  grid grid-cols-1 md:grid-cols-1 gap-6 items-end pt-2 font-pixelUi">
+                        <div class="md:col-span-2 space-y-4">
+                           <div>
+                              <label for="username" class="block text-[10px] text-slate-400 mb-2">User Name</label> 
+                              <div class="relative flex items-center">
+                                 <input type="text" id="username" name="username" required class="w-full pl-4 pr-12 py-3 bg-slate-950 border-2 border-black rounded-none focus:outline-none focus:border-emerald-500 text-xs text-slate-200"> 
+                                 <button type="button" id="generate-username-btn" title="Generate Eco Handle" class="absolute right-3 text-slate-400 hover:text-emerald-400 transition transform active:scale-90 text-sm">🎲</button>
+                              </div>
+                           </div>
+                           <div>
+                              <label for="register-password" class="block text-[10px] text-slate-400 uppercase tracking-wider mb-2">Password</label> 
+                              <div class="relative flex items-center">
+                                 <input type="password" id="register-password" name="register-password" required class="w-full pl-4 pr-12 py-3 bg-slate-950 border-2 border-black rounded-none focus:outline-none focus:border-emerald-500 text-xs text-slate-200"> 
+                                 <span class='flex justify-center item-center gap-2 space-x-4'>
+                                 <button type="button" id="generate-password-btn" title="Generate Password" class="absolute right-3 text-slate-400 hover:text-lime-400 transition transform active:scale-90 text-sm">🔑</button>
+                                 <button type="button" id="toggle-password-btn" title="Show/Hide Password" class="absolute right-9  text-slate-400 hover:text-lime-400 transition transform active:scale-90 text-sm">👁️</button>
+                                 </span>
+                                </div>
+                           </div>
+                        </div>
+                        <!-- buttons-->
+                        <div class=" grid grid-cols-1 sm:grid-cols-3 gap-3">
+                           <div class="w-full">
+                              <button type="button" id="auth-login-btn" class="w-full btn-retro btn-lime py-3 px-4 text-xs h-[48px]">
+                              Guest→
+                              </button> 
+                           </div>
+                           <div class="w-full">
+                              <button type="button" id="auth-guestLogin-btn" class="w-full btn-retro btn-orange py-3 px-4 text-xs h-[48px]">
+                              Sign in→
+                              </button> 
+                           </div>
+                           <div class="w-full">
+                              <button type="button" id="auth-submit-btn" class="w-full btn-retro btn-emerald py-3 px-4 text-xs h-[48px]">
+                              log in→
+                              </button> 
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+            </div>
+            </form> 
+         </div>
+         </div>
+      </section>
+   </body>
+</html>

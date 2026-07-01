@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verte | Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Silkscreen:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+         tailwind.config = {
+             theme: {
+                 extend: {
+                     fontFamily: {
+                         pixelHeader: ['"Press Start 2P"', 'cursive'],
+                         pixelUi: ['"Silkscreen"', 'sans-serif'],
+                     }
+                 }
+             }
+         }
+      </script>
+</head>
+<body class="bg-slate-950 text-slate-200 antialiased p-6" style="background-image: url('assets/backdrop2.jpg'); background-attachment: fixed;">
+      
+    <header class="sticky top-0 z-50 backdrop-blur-md bg-slate-900/80 border-b-2 border-slate-700 p-4 rounded-b-2xl shadow-[0_4px_0px_#000]">
+        <div class="max-w-4xl mx-auto flex items-center justify-between">
+            <h1 class="text-xl font-pixelHeader text-emerald-500">DASHBOARD</h1>
+            <div class="flex items-center gap-4 bg-slate-950 p-2 pr-4 rounded-full border-2 border-slate-700 shadow-[2px_2px_0px_#000]">
+                <div class="text-right hidden sm:block">
+                    <p id="dashboard-username" class="text-[10px] text-white font-pixelUi">...</p>
+                    <p id="dashboard-userxp" class="text-[9px] text-emerald-400 font-pixelUi">0 XP</p>
+                </div>
+                <div class="relative w-16 h-16 flex items-center justify-center">
+                    <div class="w-12 h-12 rounded-full border-2 border-black overflow-hidden bg-sky-950">
+                        <img id="dashboard-avatar" src="assets/avatars/avatar1.webp" alt="Profile" class="w-full h-full object-cover">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-5xl mx-auto mt-6 px-4">
+        <section class="bg-slate-900 verte-card p-8 border-2 border-emerald-900/50 shadow-[8px_8px_0px_0px_#065f46] rounded-2xl text-center space-y-8">
+            <div class="w-48 h-48 mx-auto border-4 border-slate-700 flex items-center justify-center text-6xl bg-slate-950 rounded-xl">📷</div>
+            <h2 class="font-pixelHeader text-xl text-emerald-400">READY TO SCAN?</h2>
+            <button id="scan-trigger" class="btn-retro btn-orange px-12 py-4">INITIATE SCAN</button>
+            <input type="file" id="cameraInput" accept="image/*" capture="environment" class="hidden">
+        </section>
+        
+        <aside class="mt-6 bg-slate-900 border-2 border-slate-700 p-6 rounded-xl">
+            <h3 class="font-pixelUi text-xs text-slate-400 mb-4 uppercase">Recent Classifications</h3>
+            <div id="activity-list" class="space-y-2 font-mono text-sm"></div>
+        </aside>
+    </main>
+    <script src="dashboard.js"></script>
+</body>
+</html>

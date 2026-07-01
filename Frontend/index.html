@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Verte - An AI Waste Classifier</title>
+      <link rel="stylesheet" href="style.css">
+      <link rel="preconnect" href="https://fonts.googleapis.com">
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+      <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Silkscreen:wght@400;700&display=swap" rel="stylesheet">
+      <script src="https://cdn.tailwindcss.com"></script>
+      <script>
+         tailwind.config = {
+             theme: {
+                 extend: {
+                     fontFamily: {
+                         pixelHeader: ['"Press Start 2P"', 'cursive'],
+                         pixelUi: ['"Silkscreen"', 'sans-serif'],
+                     }
+                 }
+             }
+         }
+      </script>
+      <script src="index.js" defer></script>
+      <link rel="stylesheet" href="style.css">
+   </head>
+   <body class="bg-slate-950 antialiased bg-cover bg-center bg-no-repeat bg-fixed" style="background-image: url('https://i.pinimg.com/originals/b5/36/2a/b5362a0da6f2fab17a29bc95dc5f2816.gif');">
+      <main id="intro-container" class="relative w-full min-h-screen overflow-hidden bg-transparent">
+         
+         <div class=" absolute fixed top-1/2 left-4 md:left-6 -translate-y-1/2 z-40 pointer-events-auto flex flex-col gap-3 font-pixelUi select-none">
+            <button id="nav-home" title="Go to Start Screen" class="w-10 h-10 bg-slate-950 border-2 border-black shadow-[3px_3px_0px_#000] hover:bg-emerald-950 hover:text-emerald-400 text-slate-300 flex items-center justify-center cursor-pointer transition-all active:translate-x-[1px] active:translate-y-[1px] active:shadow-[2px_2px_0px_#000] text-lg group relative">
+               🏠
+               <span class="absolute left-14 bg-slate-950 border border-black px-2 py-1 text-[9px] tracking-widest text-emerald-400 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap shadow-[2px_2px_0px_rgba(0,0,0,0.5)]">HOME</span>
+            </button>
+            <button id="nav-dashboard" title="Open Dashboard" class="w-10 h-10 bg-slate-950 border-2 border-black shadow-[3px_3px_0px_#000] hover:bg-emerald-950 hover:text-emerald-400 text-slate-300 flex items-center justify-center cursor-pointer transition-all active:translate-x-[1px] active:translate-y-[1px] active:shadow-[2px_2px_0px_#000] text-lg group relative">
+               📸
+               <span class="absolute left-14 bg-slate-950 border border-black px-2 py-1 text-[9px] tracking-widest text-emerald-400 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap shadow-[2px_2px_0px_rgba(0,0,0,0.5)]">DASHBOARD</span>
+            </button>
+            <button id="nav-faq" title="View FAQ" class="w-10 h-10 bg-slate-950 border-2 border-black shadow-[3px_3px_0px_#000] hover:bg-emerald-950 hover:text-emerald-400 text-slate-300 flex items-center justify-center cursor-pointer transition-all active:translate-x-[1px] active:translate-y-[1px] active:shadow-[2px_2px_0px_#000] text-lg group relative">
+               ❓
+               <span class="absolute left-14 bg-slate-950 border border-black px-2 py-1 text-[9px] tracking-widest text-emerald-400 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap shadow-[2px_2px_0px_rgba(0,0,0,0.5)]">FAQ</span>
+            </button>
+            <button id="nav-team" title="Meet the Developers" class="w-10 h-10 bg-slate-950 border-2 border-black shadow-[3px_3px_0px_#000] hover:bg-emerald-950 hover:text-emerald-400 text-slate-300 flex items-center justify-center cursor-pointer transition-all active:translate-x-[1px] active:translate-y-[1px] active:shadow-[2px_2px_0px_#000] text-lg group relative">
+               👥
+               <span class="absolute left-14 bg-slate-950 border border-black px-2 py-1 text-[9px] tracking-widest text-emerald-400 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap shadow-[2px_2px_0px_rgba(0,0,0,0.5)]">TEAM</span>
+            </button>
+            <button id="nav-about" title="Learn More" class="w-10 h-10 bg-slate-950 border-2 border-black shadow-[3px_3px_0px_#000] hover:bg-emerald-950 hover:text-emerald-400 text-slate-300 flex items-center justify-center cursor-pointer transition-all active:translate-x-[1px] active:translate-y-[1px] active:shadow-[2px_2px_0px_#000] text-lg group relative">
+               ℹ️
+               <span class="absolute left-14 bg-slate-950 border border-black px-2 py-1 text-[9px] tracking-widest text-emerald-400 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap shadow-[2px_2px_0px_rgba(0,0,0,0.5)]">ABOUT</span>
+            </button>
+         </div>
+
+         <div class="pointer-events-none fixed inset-0 z-50 bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%),linear-gradient(90deg,rgba(255,0,0,0.06),rgba(0,255,0,0.02),rgba(0,0,255,0.06))] bg-[length:100%_4px,3px_100%] opacity-30"></div>
+         <div class="fixed inset-0 pointer-events-none z-50 font-pixelUi p-4 md:p-6 select-none mix-blend-screen">
+            <div class="absolute bottom-4 right-4 md:bottom-4 md:right-6 text-[9px] tracking-wider text-white hidden sm:block">
+               LOC_ID // FRNT-END_NODE
+            </div>
+         </div>
+
+         <section id="slide-1" class="slide absolute inset-0 w-full min-h-screen flex items-center justify-center px-6 transition-all duration-1000 ease-in-out z-30 visible opacity-100 translate-y-0 bg-slate-900/20 pointer-events-none no-scanlines">
+            <div class="max-w-3xl w-full text-center flex flex-col items-center justify-center bg-slate-900 backdrop-blur-sm border-4 border-emerald-900/60 p-4 md:p-12 shadow-[8px_8px_0px_0px_#065f46]">
+               <h1 class="morph-title text-5xl md:text-8xl font-pixelHeader text-green-600 mb-6 tracking-wide uppercase flex items-baseline justify-center animate-bounce-flicker">
+                  Verte<span class="inline-block w-3 h-3 md:w-5 md:h-5 ml-2 bg-green-600 rounded-full animate-blink"></span>
+               </h1>
+               <h2 class="text-md md:text-xl font-pixelUi text-emerald-300 mb-8 uppercase tracking-wide">
+                  Waste management made easy.
+               </h2>
+               <p class="text-sm md:text-base font-mono tracking-tight text-slate-300 leading-relaxed mb-10 max-w-2xl mx-auto">
+                  Every day, millions of tons of waste are generated across the globe. Effective waste management helps reduce pollution, conserve resources, and create healthier communities.
+               </p>
+               <div class="text-[10px] font-pixelUi text-slate-500 tracking-widest animate-pulse">SCROLL DOWN TO BEGIN</div>
+            </div>
+         </section>
+
+         <section id="slide-2" class="slide absolute inset-0 w-full min-h-screen flex items-center justify-center px-6 transition-all duration-1000 ease-in-out z-20 invisible opacity-0 translate-y-full bg-slate-900/20 pointer-events-none no-scanlines">
+            <div class="max-w-3xl w-full text-center flex flex-col items-center justify-center bg-slate-900/90 backdrop-blur-sm border-2 border-slate-900/50 p-8 md:p-12 shadow-[4px_4px_20px_rgba(0,0,0,0.3)]">
+               <div class="text-5xl mb-6 drop-shadow-sm">⚠️</div>
+               <p class="text-xl md:text-3xl font-pixelHeader text-amber-400 leading-tight mb-8 uppercase tracking-wide">
+                  The Environmental Threat
+               </p>
+               <p class="text-sm md:text-base font-mono tracking-tight text-slate-300 leading-relaxed mb-12 max-w-2xl mx-auto">
+                  Improperly managed waste contributes to environmental pollution, greenhouse gas emissions, water contamination, and overflowing landfills.
+               </p>
+               <div class="text-[10px] font-pixelUi text-slate-500 tracking-widest animate-pulse">SCROLL DOWN OR USE SIDEBAR</div>
+            </div>
+         </section>
+
+         <section id="slide-3" class="slide absolute inset-0 w-full min-h-screen flex items-center justify-center px-6 transition-all duration-1000 ease-in-out z-10 invisible opacity-0 translate-y-full bg-slate-900/20 pointer-events-none no-scanlines">
+            <div class="max-w-3xl w-full text-center flex flex-col items-center justify-center bg-slate-900/90 backdrop-blur-sm border-2 border-slate-900/50 p-8 md:p-12 shadow-[4px_4px_20px_rgba(0,0,0,0.3)]">
+               <div class="inline-flex items-center gap-2 bg-lime-500/10 border border-lime-500/20 text-lime-400 font-pixelUi text-xs px-4 py-2 mb-6">
+                  <span class="text-slate-900 font-bold bg-lime-500 px-2 py-0.5 text-[10px]">+10 XP</span>
+               </div>
+               <p class="text-lg md:text-2xl font-pixelHeader text-white/90 leading-normal mb-8 uppercase tracking-wide">
+                  Scan. Guess. Win Points.
+               </p>
+               <p class="text-sm md:text-base font-mono tracking-tight text-slate-300 leading-relaxed mb-12 max-w-2xl mx-auto">
+                  Snap a photo of your trash. Can you guess if it belongs in <span class="text-blue-400 font-bold">Recycling</span>, <span class="text-amber-400 font-bold">Compost</span>, or the <span class="text-slate-400 font-bold">Landfill</span>?
+               </p>
+            </div>
+         </section>
+
+         <section id="slide-4" class="slide absolute inset-0 w-full min-h-screen flex items-center justify-center px-6 transition-all duration-1000 ease-in-out z-10 invisible opacity-0 translate-y-full bg-slate-900/20 pointer-events-none no-scanlines">
+            <div class="max-w-3xl w-full text-center flex flex-col items-center justify-center bg-slate-900/80 backdrop-blur-sm border-2 border-slate-700/50 p-8 md:p-12 shadow-[4px_4px_20px_rgba(0,0,0,0.3)]">
+               <p class="text-lg md:text-2xl font-pixelHeader text-white/90 leading-normal mb-8 uppercase tracking-wide">
+                  Scan. Guess. Win Points.
+               </p>
+               <p class="text-sm md:text-base font-mono tracking-tight text-slate-300 leading-relaxed mb-12 max-w-2xl mx-auto">
+                  Snap a photo of your trash. Can you guess if it belongs in <span class="text-blue-400 font-bold">Recycling</span>, <span class="text-amber-400 font-bold">Compost</span>, or the <span class="text-slate-400 font-bold">Landfill</span>? Train your environmental reflexes, log correct choices, and clean up the planet!
+               </p>
+               <div class="flex justify-center items-center w-full">
+                  <button onclick="toggleOverlay('dashboard-overlay', true)" class="btn-lime mt-8 w-full max-w-sm btn-retro bg-emerald-700 hover:bg-emerald-600 text-white px-6 py-3 border-b-4 border-emerald-950 font-pixelUi text-xs transition-all">
+                     Let's Get Started →
+                  </button>
+               </div>
+            </div>
+         </section>
+
+         <div id="faq-overlay" class="fixed inset-0 z-[100] flex items-center justify-center bg-slate-950/90 p-6 opacity-0 invisible transition-all duration-300 pointer-events-none">
+            <div class="max-w-2xl w-full bg-slate-900 border-4 border-emerald-500/50 p-8 shadow-[8px_8px_0px_0px_#059669]">
+               <h2 class="text-2xl font-pixelHeader text-emerald-400 mb-6">FAQ</h2>
+               <div class="space-y-4 font-mono text-sm text-slate-300">
+                  <p><strong>Q: How do I scan?</strong><br>A: Use the dashboard camera icon.</p>
+                  <p><strong>Q: Is this free?</strong><br>A: Completely free and open source.</p>
+               </div>
+               <button onclick="toggleOverlay('faq-overlay', false)" class="mt-8 btn-retro bg-slate-700 hover:bg-slate-600 text-white p-3 border-b-4 border-slate-950 font-pixelUi text-xs">Close</button>
+            </div>
+         </div>
+
+         <div id="team-overlay" class="fixed inset-0 z-[100] flex items-center justify-center bg-slate-950/90 p-6 opacity-0 invisible transition-all duration-300 pointer-events-none">
+            <div class="max-w-2xl w-full bg-slate-900 border-4 border-amber-500/50 p-8 shadow-[8px_8px_0px_0px_#d97706]">
+               <h2 class="text-2xl font-pixelHeader text-amber-400 mb-6">The Team</h2>
+               <p class="font-mono text-sm text-slate-300 mb-6">Designed and built by the Verte Core Developers. A project dedicated to environmental AI innovation.</p>
+               <div class="font-mono text-sm text-slate-300">
+                  <strong class="text-amber-300 mb-4 block">Developers:</strong>
+                  <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+                     <div class="flex flex-col items-center text-center bg-slate-950/50 p-3 rounded-xl border border-slate-700">
+                        <img src="assets/pfp/namrata.jpg" alt="Namrata" class="w-16 h-16 rounded-full border-4 border-emerald-500 object-cover mb-3 shadow-lg">
+                        <p class="font-bold text-white text-[10px]">Namrata S.</p>
+                     </div>
+                     <div class="flex flex-col items-center text-center bg-slate-950/50 p-3 rounded-xl border border-slate-700">
+                        <img src="assets/pfp/amruta.jpg" alt="Amruta" class="w-16 h-16 rounded-full border-4 border-emerald-500 object-cover mb-3 shadow-lg">
+                        <p class="font-bold text-white text-[10px]">Amruta</p>
+                     </div>
+                     <div class="flex flex-col items-center text-center bg-slate-950/50 p-3 rounded-xl border border-slate-700">
+                        <img src="assets/pfp/samiksha.jpg" alt="Samiksha" class="w-16 h-16 rounded-full border-4 border-emerald-500 object-cover mb-3 shadow-lg">
+                        <p class="font-bold text-white text-[10px]">Samiksha</p>
+                     </div>
+                     <div class="flex flex-col items-center text-center bg-slate-950/50 p-3 rounded-xl border border-slate-700">
+                        <img src="assets/pfp/barsa.jpg" alt="Barsa" class="w-16 h-16 rounded-full border-4 border-emerald-500 object-cover mb-3 shadow-lg">
+                        <p class="font-bold text-white text-[10px]">Barsa</p>
+                     </div>
+                     <div class="flex flex-col items-center text-center bg-slate-950/50 p-3 rounded-xl border border-slate-700">
+                        <img src="assets/pfp/pratikshya.jpg" alt="Pratikshya" class="w-16 h-16 rounded-full border-4 border-emerald-500 object-cover mb-3 shadow-lg">
+                        <p class="font-bold text-white text-[10px]">Pratikshya</p>
+                     </div>
+                  </div>
+               </div>
+               <button onclick="toggleOverlay('team-overlay', false)" class="mt-8 w-full btn-retro bg-slate-800 hover:bg-slate-700 text-white px-6 py-3 border-b-4 border-slate-950 font-pixelUi text-xs transition-all">Close</button>
+            </div>
+         </div>
+
+         <div id="about-overlay" class="fixed inset-0 z-[100] flex items-center justify-center bg-slate-950/90 p-6 opacity-0 invisible transition-all duration-300 pointer-events-none">
+            <div class="max-w-2xl w-full bg-slate-900 border-4 border-emerald-500/50 p-8 shadow-[8px_8px_0px_0px_#059669]">
+               <h2 class="text-2xl font-pixelHeader text-emerald-400 mb-6">ABOUT</h2>
+               <div class="space-y-4 font-mono text-sm text-slate-300">
+                  <p><strong>Q: How do I scan?</strong><br>A: Use the dashboard camera icon.</p>
+                  <p><strong>Q: Is this free?</strong><br>A: Completely free and open source.</p>
+               </div>
+               <button onclick="toggleOverlay('about-overlay', false)" class="mt-8 btn-retro bg-slate-700 hover:bg-slate-600 text-white p-3 border-b-4 border-slate-950 font-pixelUi text-xs">Close</button>
+            </div>
+         </div>
+
+         <div id="dashboard-overlay" class="size-full fixed inset-0 z-[100] flex flex-col items-center justify-center bg-slate-950/85 p-4 invisible opacity-0 transition-all duration-300 pointer-events-none">
+            <section id="dashboard" class="flex flex-col items-center justify-center gap-4 p-2 z-40 pointer-events-auto max-w-2xl w-full">
+               
+               <div class="w-full bg-slate-900 border-4 border-emerald-500/50 p-6 md:p-8 shadow-[8px_8px_0px_0px_#059669] text-center">
+                  <div class="flex justify-between items-center mb-4 font-pixelUi text-[10px] text-slate-400">
+                     <span>SYS_STATUS: ONLINE</span>
+                     <span>SCORE: <span id="user-score" class="text-emerald-400">0</span> PTS</span>
+                  </div>
+
+                  <h1 class="morph-title font-pixelHeader text-green-600 mb-6 text-xl md:text-3xl tracking-wide uppercase flex items-baseline justify-center">
+                     Verte<span class="inline-block w-3 h-3 ml-2 bg-white rounded-full animate-blink"></span>
+                  </h1>
+                  
+                  <div class="flex flex-col md:flex-row gap-6 p-1">
+                     
+                     <div id="image-preview-box" class="basis-1/2 aspect-square bg-slate-950 border-4 border-slate-700 border-dashed flex flex-col items-center justify-center relative overflow-hidden">
+                        <div id="placeholder-icon" class="text-4xl mb-3 opacity-50">🌸</div>
+                        <p id="placeholder-text" class="font-pixelUi p-4 text-slate-500 text-[10px] tracking-widest">AWAITING_INPUT...</p>
+                        <video id="webcam-feed" class="hidden absolute inset-0 w-full h-full object-cover" autoplay playsinline></video>
+                        <img id="preview-image" class="hidden absolute inset-0 w-full h-full object-cover" alt="Scan preview">
+                        
+                        <div id="scanner-laser" class="hidden absolute top-0 left-0 w-full h-1 bg-emerald-500 shadow-[0_0_10px_#10b981] animate-scan"></div>
+                     </div>
+
+                     <div id="control-panel" class="basis-1/2 flex flex-col gap-4 justify-center">
+                        
+                        <div id="section-capture" class="flex flex-col gap-4 w-full">
+                           <button id="btn-capture" class="btn-retro bg-emerald-700 hover:bg-emerald-600 text-white p-4 border-b-4 border-emerald-950 font-pixelUi text-xs transition-colors">
+                              CAPTURE
+                           </button>
+                           <button id="btn-upload" class="btn-retro bg-slate-700 hover:bg-slate-600 text-white p-4 border-b-4 border-slate-950 font-pixelUi text-xs transition-colors relative overflow-hidden">
+                              UPLOAD
+                              <input type="file" id="file-input" accept="image/*" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer">
+                           </button>
+                        </div>
+
+                        <div id="section-quiz" class="hidden flex flex-col gap-3 w-full">
+                           <div class="border border-slate-700 p-2 bg-slate-950/50 mb-1 text-center">
+                              <p class="font-pixelUi text-amber-400 text-[9px] tracking-wider animate-pulse">MATERIAL DETECTED</p>
+                              <p id="detected-material-hint" class="font-pixelUi text-white text-xs mt-1 uppercase tracking-wide">ANALYZING...</p>
+                           </div>
+                           <p class="font-pixelUi text-slate-400 text-[9px] mb-1 text-left uppercase">CHOOSE STREAM:</p>
+                           
+                           <button data-choice="recyclable" class="btn-choice bg-blue-700 hover:bg-blue-600 text-white p-3 border-b-4 border-blue-950 font-pixelUi text-xs tracking-wider">RECYCLABLE</button>
+                           <button data-choice="compostable" class="btn-choice bg-green-700 hover:bg-green-600 text-white p-3 border-b-4 border-green-950 font-pixelUi text-xs tracking-wider">COMPOSTABLE</button>
+                           <button data-choice="landfill" class="btn-choice bg-amber-800 hover:bg-amber-700 text-white p-3 border-b-4 border-amber-950 font-pixelUi text-xs tracking-wider">LANDFILL</button>
+                        </div>
+
+                        <div id="section-retry" class="hidden flex flex-col gap-4 w-full">
+                           <div class="text-red-500 font-pixelUi text-xs tracking-widest my-1 animate-bounce">
+                              ❌ SORT_ERROR
+                           </div>
+                           <p class="font-pixelUi text-slate-400 text-[9px] px-1 leading-normal text-center">Your classification didn't match the material profile parameters.</p>
+                           
+                           <div class="flex flex-col gap-2 mt-2">
+                              <button id="btn-try-again" class="btn-retro bg-orange-600 hover:bg-orange-500 text-white p-3 border-b-4 border-orange-950 font-pixelUi text-xs">
+                                 TRY AGAIN
+                              </button>
+                              <button id="btn-reset-dash" class="btn-retro bg-slate-800 hover:bg-slate-700 text-slate-300 p-3 border-b-4 border-slate-950 font-pixelUi text-xs">
+                                 RETURN TO DASHBOARD
+                              </button>
+                           </div>
+                        </div>
+
+                     </div>
+                  </div>
+               </div>
+               
+               <button onclick="toggleOverlay('dashboard-overlay', false)" class="btn-retro bg-rose-950/80 hover:bg-rose-900 text-rose-300 p-3 border-2 border-rose-800/50 font-pixelUi text-xs tracking-wider transition-colors w-full">
+                  ← RETURN TO START
+               </button>
+            </section>
+         </div>
+
+      </main>
+   </body>
+</html>
