@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let isScrollingLocked = false;
     const slides = document.querySelectorAll('.slide');
     
-    // 2. Unified Slide Transition Logic
+    // Unified Slide Transition Logic
     window.updateSlides = function(nextIndex) {
         if (nextIndex < 0 || nextIndex >= slides.length) return;
         
@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
         currentSlideIndex = nextIndex;
     };
 
-    // 3. Overlay Toggle Helper
+    // Overlay Toggle Helper
     window.toggleOverlay = function(id, show) {
         const overlay = document.getElementById(id);
         if (show) {
@@ -57,14 +57,14 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    // 4. Attach Navigation Listeners
+    // Attach Navigation Listeners
     document.getElementById('nav-home').addEventListener('click', () => updateSlides(0));
     document.getElementById('nav-faq').addEventListener('click', () => toggleOverlay('faq-overlay', true));
     document.getElementById('nav-dashboard').addEventListener('click', () => toggleOverlay('dashboard-overlay', true));
     document.getElementById('nav-team').addEventListener('click', () => toggleOverlay('team-overlay', true));
     document.getElementById('nav-about').addEventListener('click', () => toggleOverlay('about-overlay', true));
 
-    // 5. Scroll Event
+    // Scroll Event
     document.getElementById('intro-container').addEventListener('wheel', (e) => {
         if (isScrollingLocked) return;
         if (e.deltaY > 30 && currentSlideIndex < slides.length - 1) {
@@ -99,7 +99,6 @@ document.addEventListener('DOMContentLoaded', () => {
     let currentCorrectAnswer = "";
     let currentScore = 0;
 
-    // --- Helper: Reset UI States ---
     function clearPreviewContainer() {
         placeholderIcon.classList.add('hidden');
         placeholderText.classList.add('hidden');
@@ -107,7 +106,6 @@ document.addEventListener('DOMContentLoaded', () => {
         previewImage.classList.add('hidden');
     }
 
-    // Dynamic Visibility Manager
     function activeSection(section) {
         sectionCapture.classList.add('hidden');
         sectionQuiz.classList.add('hidden');
@@ -129,8 +127,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 clearPreviewContainer();
                 previewImage.src = event.target.result;
                 previewImage.classList.remove('hidden');
-                
-                // CONNECTED: Send uploaded base64 data to backend
                 uploadToFlaskBackend(event.target.result);
             };
             reader.readAsDataURL(file);
@@ -139,7 +135,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- 2. CAPTURE LOGIC ---
     btnCapture.addEventListener('click', async () => {
-        // State A: Camera is NOT running -> Turn it on
         if (!localStream) {
             try {
                 localStream = await navigator.mediaDevices.getUserMedia({ 
@@ -157,9 +152,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 console.error("Camera access blocked or unavailable: ", err);
                 alert("Unable to access camera device.");
             }
-        } 
-        // State B: Camera IS running -> Freeze frame and save picture
-        else {
+        } else {
             const canvas = document.createElement('canvas');
             canvas.width = video.videoWidth;
             canvas.height = video.videoHeight;
@@ -174,13 +167,10 @@ document.addEventListener('DOMContentLoaded', () => {
             previewImage.classList.remove('hidden');
             
             stopCamera();
-
-            // CONNECTED: Send snapshot data to backend
             uploadToFlaskBackend(base64Data);
         }
     });
 
-    // --- Helper: Turn off Camera Hardware ---
     function stopCamera() {
         if (localStream) {
             localStream.getTracks().forEach(track => track.stop());
@@ -191,23 +181,22 @@ document.addEventListener('DOMContentLoaded', () => {
         btnCapture.classList.replace('bg-red-700', 'bg-emerald-700');
     }
 
-    // Function triggered right after an image file is selected or snapshot is taken
     async function uploadToFlaskBackend(base64Image) {
-        laser.classList.remove('hidden'); // Turn on laser animation
+        laser.classList.remove('hidden');
         
         try {
-            // CONNECTED: Pointing to updated DB-connected backend route
-            const response = await fetch('http://localhost:5000/api/classify', {
-    method: 'POST',
+            // FIXED: Using relative URLs for deployment stability
+            const response = await fetch('/api/classify', {
+                method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ 
                     image: base64Image,
-                    username: "Guest" // Adjust dynamic username variable here as needed
+                    username: "Guest" 
                 })
             });
             
             const data = await response.json();
-            laser.classList.add('hidden'); // Stop animation
+            laser.classList.add('hidden');
             
             if (!data.valid) {
                 alert("⚠️ SYSTEM FAILURE: UNIDENTIFIED OBJECT.");
@@ -215,10 +204,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
 
-            // Set up Quiz values received from Flask App
             currentCorrectAnswer = data.category;
             hintLabel.textContent = data.material; 
-            
             activeSection('quiz'); 
             
         } catch (err) {
@@ -233,13 +220,13 @@ document.addEventListener('DOMContentLoaded', () => {
             const choice = e.target.getAttribute('data-choice');
             
             if (choice === currentCorrectAnswer) {
-                // Persistent Reward Call to Backend DB
                 try {
-                    await fetch('http://localhost:5000/api/classify', {
-    method: 'POST',
+                    // FIXED: Now hitting the correct backend endpoint path
+                    await fetch('/api/quiz/reward', {
+                        method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({
-                            username: "Guest", // Pass variable matching your state setup
+                            username: "Guest", 
                             material: hintLabel.textContent,
                             points: 10
                         })
@@ -259,7 +246,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Retry Event Listeners
     document.getElementById('btn-try-again').addEventListener('click', () => activeSection('quiz'));
     document.getElementById('btn-reset-dash').addEventListener('click', resetDashboard);
 
