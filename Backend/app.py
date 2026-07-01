@@ -6,6 +6,7 @@ import io
 import base64
 import numpy as np
 from PIL import Image
+import os
 
 import tensorflow as tf
 from tensorflow.keras.applications.mobilenet_v2 import preprocess_input
@@ -20,7 +21,8 @@ DB_PATH = "database/verte.db"
 print("Loading TensorFlow MobileNetV2 Model...")
 
 # Replace with the actual path to your saved model file (.h5, .keras, or folder path)
-MODEL_PATH = "../AI_model/scripts/verte_model.keras" 
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+MODEL_PATH = os.path.join(BASE_DIR, '..', 'AI_model', 'scripts', 'verte_model.keras')
 MODEL = tf.keras.models.load_model(MODEL_PATH)
 
 # CRITICAL: These must match the exact alphabetical order of the folders 
