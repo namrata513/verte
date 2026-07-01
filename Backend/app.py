@@ -20,7 +20,8 @@ MODEL_PATH = os.path.join(BASE_DIR, '..', 'AI_model', 'scripts', 'verte_model.ke
 MODEL = tf.keras.models.load_model(MODEL_PATH)
 
 # Initialize Flask app to serve the root directory containing your frontend files
-app = Flask(__name__, static_folder='.', static_url_path='')
+FRONTEND_DIR = os.path.abspath(os.path.join(BASE_DIR, '..', 'Frontend'))
+app = Flask(__name__, static_folder=FRONTEND_DIR, static_url_path='')
 CORS(app, resources={r"/api/*": {"origins": "*"}}, methods=["GET", "POST", "OPTIONS"])
 
 CLASS_NAMES = ['battery', 'biological', 'brown-glass', 'cardboard', 'clothes', 'glass', 'green-glass', 'metal', 'paper', 'plastic', 'shoes', 'trash', 'white-glass']
@@ -70,7 +71,7 @@ def preprocess_image(image_data, is_base64=False):
 # --- FIXED: Corrected serving route function name ---
 @app.route('/')
 def home():
-    return send_from_directory('.', 'index.html')
+    return send_from_directory(FRONTEND_DIR, 'index.html')                                                                                                                                                                                                                              
 
 # --- AUTH ROUTES ---
 @app.route('/api/register', methods=['POST'])
