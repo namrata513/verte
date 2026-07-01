@@ -27,7 +27,7 @@ MODEL = tf.keras.models.load_model(MODEL_PATH)
 
 frontend_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'Frontend'))
 
-app = Flask(__name__, template_folder=frontend_dir, static_folder=frontend_dir)
+app = Flask(__name__, static_folder='.', static_url_path='')
 
 CORS(app, resources={r"/api/*": {"origins": "*"}}, methods=["GET", "POST", "OPTIONS"])
 
@@ -93,8 +93,9 @@ def preprocess_image(image_data, is_base64=False):
     
 # --- SERVING TEMPLATE ---
 @app.route('/')
-def index():
-    return render_template('index.html')
+def home():
+    # Serves index.html directly from your main folder
+    return send_from_path('.', 'index.html')
 
 # --- AUTH ROUTES ---
 @app.route('/api/register', methods=['POST'])
