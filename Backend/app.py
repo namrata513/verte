@@ -19,11 +19,13 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 MODEL_PATH = os.path.join(BASE_DIR, '..', 'AI_model', 'scripts', 'verte_model.keras')
 MODEL = tf.keras.models.load_model(MODEL_PATH)
 
-# Setup app to look at the correct folder directory root for production assets
+# Initialize Flask app to serve the root directory containing your frontend files
 app = Flask(__name__, static_folder='.', static_url_path='')
 CORS(app, resources={r"/api/*": {"origins": "*"}}, methods=["GET", "POST", "OPTIONS"])
 
 CLASS_NAMES = ['battery', 'biological', 'brown-glass', 'cardboard', 'clothes', 'glass', 'green-glass', 'metal', 'paper', 'plastic', 'shoes', 'trash', 'white-glass']
+
+# FIXED: Mapped 'plastic' to 'recyclable' to match your actual HTML button values
 CATEGORY_MAP = {
     'battery': 'landfill',      
     'biological': 'compostable',
@@ -34,7 +36,7 @@ CATEGORY_MAP = {
     'green-glass': 'recyclable',
     'metal': 'recyclable',
     'paper': 'recyclable',
-    'plastic': 'recyclable', # Changed 'plastic' to 'recyclable' to match your frontend button tags
+    'plastic': 'recyclable',       
     'shoes': 'landfill',
     'trash': 'landfill',
     'white-glass': 'recyclable'
@@ -65,7 +67,7 @@ def preprocess_image(image_data, is_base64=False):
         print(f"Error processing image: {e}")
         return None
     
-# --- FIXED SERVING TEMPLATE ROUTE ---
+# --- FIXED: Corrected serving route function name ---
 @app.route('/')
 def home():
     return send_from_directory('.', 'index.html')
