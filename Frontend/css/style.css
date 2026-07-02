@@ -1,0 +1,147 @@
+/* style.css */
+
+/* --- 1. NATIVE VIEW TRANSITIONS --- */
+.morph-title {
+    view-transition-name: verte-title;
+}
+
+/* --- 2. RETRO SCROLLBARS --- */
+.custom-scrollbar::-webkit-scrollbar {
+    width: 8px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+    background: #020617;
+    border-left: 2px solid #000000;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+    background: #10b981;
+    border: 2px solid #000000;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #22c55e;
+}
+
+/* Add this to your style.css if you want to selectively disable it */
+.no-scanlines .scanline-overlay {
+    display: none;
+}
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+}
+
+/* --- 3. PIXEL ANIMATIONS --- */
+@keyframes pixel-bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-6px); }
+}
+.animate-pixel-bounce {
+    animation: pixel-bounce 1.2s steps(2) infinite;
+}
+
+@keyframes retro-flicker {
+    0%, 19.999%, 22%, 62.999%, 64%, 64.999%, 70%, 100% {
+        opacity: 1;
+        filter: drop-shadow(0 0 0px rgba(52, 211, 153, 0));
+    }
+    20%, 21.999%, 63%, 63.999%, 65%, 69.999% {
+        opacity: 0.85;
+        filter: drop-shadow(4px 4px 0px #000);
+    }
+}
+.animate-retro-flicker {
+    animation: retro-flicker 3s infinite;
+}
+
+@keyframes terminal-blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+}
+.animate-blink {
+    animation: terminal-blink 1s step-end infinite;
+}
+
+.animate-bounce-flicker.animate-bounce-flicker {
+    animation: pixel-bounce 1.2s steps(2) infinite, retro-flicker 3s infinite;
+}
+
+/* --- 5. HUD ANIMATIONS --- */
+@keyframes hud-pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.4; transform: scale(0.9); }
+}
+.animate-hud-pulse {
+    animation: hud-pulse 2s infinite ease-in-out;
+}
+
+.avatar-label:has(input:checked) img {
+    border-color: #34d399 !important;
+    background-color: rgba(16, 185, 129, 0.2);
+}
+/* --- 4. GLOBAL RETRO BUTTON COMPONENT --- */
+.btn-retro {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-family: "Silkscreen", sans-serif;
+    text-transform: uppercase;
+    text-align: center;
+    border: 4px solid #000000;
+    border-radius: 0px;
+    box-shadow: 4px 4px 0px #000000;
+    transition: all 0.15s ease-in-out;
+    cursor: pointer;
+}
+
+/* Hover active translation mechanics */
+.btn-retro:hover {
+    transform: translate(2px, 2px);
+    box-shadow: 2px 2px 0px #000000;
+    animation: retro-flicker 0.5s infinite, pixel-bounce 0.8s steps(1) infinite;
+}
+    /* Comma-separated with timing configurations */
+   
+
+
+/* Color Variant Themes */
+.btn-emerald { background-color: #059669; color: #ffffff; }
+.btn-emerald:hover { background-color: #10b981; }
+
+.btn-lime { background-color: #84cc16; color: #020617; font-weight: 700; }
+.btn-lime:hover { background-color: #a3e635; }
+
+.btn-orange { background-color: #ea580c; color: #ffffff; }
+.btn-orange:hover { background-color: #f97316; }
+
+.btn-slate { background-color: #1e293b; color: #cbd5e1; border-width: 2px; }
+.btn-slate:hover { background-color: #334155; }
+
+/* --- SHARED VERTE DESIGN SYSTEM --- */
+
+/* CRT Scanline Effect (Apply to all pages) */
+.scanline-overlay {
+    pointer-events: none;
+    position: fixed;
+    inset: 0;
+    z-index: 50;
+    background: linear-gradient(rgba(18,16,16,0) 50%, rgba(0,0,0,0.25) 50%),
+                linear-gradient(90deg, rgba(255,0,0,0.06), rgba(0,255,0,0.02), rgba(0,0,255,0.06));
+    background-size: 100% 4px, 3px 100%;
+    opacity: 0.3;
+}
+
+/* Reusable Card Component */
+.verte-card {
+    background-color: rgba(15, 23, 42, 0.9); /* slate-900/90 */
+    border: 2px solid #334155; /* border-slate-700 */
+    backdrop-filter: blur(2px);
+}
+
+/* Standardized Typography */
+.font-header { font-family: 'Press Start 2P', cursive; }
+.font-ui { font-family: 'Silkscreen', sans-serif; }
+
+.avatar-img{
+    border-radius: 0.75rem;
+}

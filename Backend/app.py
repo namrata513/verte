@@ -8,19 +8,23 @@ import numpy as np
 from PIL import Image
 import os
 
+# Suppress TensorFlow informational and GPU warnings
+os.environ['TF_ENABLE_ONEDNN_OPTS'] = '0'
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
+
 import tensorflow as tf
 from tensorflow.keras.applications.mobilenet_v2 import preprocess_input
 from tensorflow.keras.preprocessing.image import img_to_array
 
-DB_PATH = "database/verte.db"
+DB_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'database', 'verte.db')
 
 print("Loading TensorFlow MobileNetV2 Model...")
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-MODEL_PATH = os.path.join(BASE_DIR, '..', 'AI_model', 'scripts', 'verte_model.keras')
+MODEL_PATH = os.path.join(BASE_DIR, '..', 'ai_model', 'models', 'verte_model.keras')
 MODEL = tf.keras.models.load_model(MODEL_PATH)
 
 # Initialize Flask app to serve the root directory containing your frontend files
-FRONTEND_DIR = os.path.abspath(os.path.join(BASE_DIR, '..', 'Frontend'))
+FRONTEND_DIR = os.path.abspath(os.path.join(BASE_DIR, '..', 'frontend'))
 app = Flask(__name__, static_folder=FRONTEND_DIR, static_url_path='')
 CORS(app, resources={r"/api/*": {"origins": "*"}}, methods=["GET", "POST", "OPTIONS"])
 
@@ -234,4 +238,5 @@ def reward_user():
     return jsonify({"success": True, "message": f"Successfully gained {points} XP!"}), 200
 
 if __name__ == '__main__':
-    app.run(debug=True, port=5000)
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port, debug=False)
